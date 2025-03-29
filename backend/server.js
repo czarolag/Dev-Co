@@ -2,10 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose")
 const cors = require("cors");
-
 const app = express();
+const cookieParser = require("cookie-parser");
 
-const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoute");
 
 
 // Middleware
@@ -13,6 +13,8 @@ const userRoutes = require("./routes/userRoutes");
 app.use(cors({
   credentials: true,
 }));
+
+app.use(cookieParser());
 
 app.use(express.json()); // Parse JSON data
 
@@ -24,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 // Routes        
-app.use("/api/users", userRoutes);
+app.use("/", authRoutes);
 
 
 // Start Server
