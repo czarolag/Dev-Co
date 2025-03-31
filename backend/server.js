@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 // Routes        
-app.use("/", authRoutes);
+app.use("/api/users", authRoutes);
 
 
 // Start Server
