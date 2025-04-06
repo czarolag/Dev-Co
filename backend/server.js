@@ -12,6 +12,7 @@ const authRoutes = require("./routes/authRoute");
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 app.use(cors({
   credentials: true,
+  origin: process.env.origin || "http://localhost:5173",
 }));
 
 app.use(cookieParser());
