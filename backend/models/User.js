@@ -63,7 +63,17 @@ UserSchema.methods.isValidPassword = async function (password) {
 
 // Generate JWT token for user
 UserSchema.methods.generateJWT = function () {
-    return jwt.sign({ userId: this._id }, JWT_SECRET, { expiresIn: "1h" });
-}
+    return jwt.sign({ userId: this._id, username: this.username }, JWT_SECRET, { expiresIn: "1h" });
+};
+
+
+// verify JWT token
+UserSchema.statics.verifyToken = function(token) {
+    try {
+        return jwt.verify(token, JWT_SECRET);
+    } catch (e) {
+        return null;
+    }
+};
 
 module.exports = mongoose.model("User", UserSchema);
