@@ -65,4 +65,43 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = { signup, login };
+
+// Get User Profile
+const getProfile = async (req, res) => {
+    const {token} = req.cookies;
+
+    if (!token) {
+        return res.status(401).json({ message: "Not Authenticated" });
+    }
+
+    // decoded JWT token
+    const decoded = User.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(403).json({ message: "Invalid token" });
+    }
+
+    try {
+        // find user by
+        const user = await User.findById(decoded.userId).select("-password");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user);
+    } catch (e) {
+        console.error("Error fetching user: ", e);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
+// User Sign out
+const signout = (req, res) => {
+    res.clearCookie("token")
+    res.status(200).json({ message: "Successfully signed out" });
+}
+
+
+module.exports = { signup, login, getProfile, signout };
