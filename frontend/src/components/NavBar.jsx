@@ -48,11 +48,10 @@ function NavBar() {
                         <MenuIcon />
                     </IconButton>
 
-                    <Typography variant="h6" sx={{ flexGrow: 1 }} >
-                    </Typography>
-
+                    <Typography variant="h6" sx={{ flexGrow: 1 }} />
+        
                     {/* Right Sidebar Trigger */}
-                    <Avatar edge="end" onClick={() => setRightOpen(true)} sx={{ '&:hover': { cursor: 'pointer' } }}>
+                    <Avatar edge="end" onClick={() => setRightOpen(true)} sx={{ '&:hover': { cursor: 'pointer' }, outline: "solid" }}>
                         <AccountCircle />
                     </Avatar>
                 </Toolbar>
@@ -77,7 +76,7 @@ function NavBar() {
                 <Box sx={{ p: 2 }}>
                     <List>
                         <ListItemButton href="/" onClick={() => setLeftOpen(false)}>
-                            <HomeIcon sx={{ mr: 2 }} />
+                            <HomeIcon sx={{ marginRight: 2 }} />
                             <ListItemText primary="Home" />
                         </ListItemButton>
 
@@ -85,18 +84,18 @@ function NavBar() {
                         {user && (
                             <>
                                 <ListItemButton href="/getting-started" onClick={() => setLeftOpen(false)}>
-                                    <StartIcon sx={{ mr: 2 }} />
+                                    <StartIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Getting Started" />
                                 </ListItemButton>
                             </>
                         )}
 
                         <ListItemButton href="/about" onClick={() => setLeftOpen(false)}>
-                            <InfoIcon sx={{ mr: 2 }} />
+                            <InfoIcon sx={{ marginRight: 2 }} />
                             <ListItemText primary="About" />
                         </ListItemButton>
                         <ListItemButton href="/contact" onClick={() => setLeftOpen(false)}>
-                            <ContactMailIcon sx={{ mr: 2 }} />
+                            <ContactMailIcon sx={{ marginRight: 2 }} />
                             <ListItemText primary="Contact" />
                         </ListItemButton>
                     </List>
@@ -122,20 +121,20 @@ function NavBar() {
                 <Box sx={{ p: 2 }}>
                     <List>
                         <ListItem>
-                            <Avatar sx={{ mr: 2 }} />
+                            <Avatar sx={{ marginRight: 2 }} />
                             <ListItemText>{user ? user.username : "Guest"}</ListItemText>
-                            <CloseIcon sx={{ mr: 2, '&:hover': { cursor: 'pointer' } }} button onClick={() => setRightOpen(false)} />
+                            <CloseIcon sx={{ marginRight: 2, '&:hover': { cursor: 'pointer' } }} button onClick={() => setRightOpen(false)} />
                         </ListItem>
                         <Divider />
 
                         {!user && (
                             <>
-                              <ListItemButton href="/signin" onClick={() => setLeftOpen(false)}>
-                                    <LoginIcon sx={{ mr: 2 }} />
-                                    <ListItemText primary="Sign In" />
+                              <ListItemButton href="/login" onClick={() => setLeftOpen(false)}>
+                                    <LoginIcon sx={{ marginRight: 2 }} />
+                                    <ListItemText primary="Login" />
                                 </ListItemButton>
                                 <ListItemButton href="/signup" onClick={() => setLeftOpen(false)}>
-                                    <SensorOccupiedIcon sx={{ mr: 2 }} />
+                                    <SensorOccupiedIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Sign Up" />
                                 </ListItemButton>
 
@@ -145,25 +144,25 @@ function NavBar() {
                         {user && (
                             <>
                                 <ListItemButton href="/status" onClick={() => setLeftOpen(false)}>
-                                    <TagFacesIcon sx={{ mr: 2 }} />
+                                    <TagFacesIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Set Status" />
                                 </ListItemButton>
                                 <Divider />
-                                <ListItemButton href="/dashboard" onClick={() => setLeftOpen(false)}>
-                                    <AccountCircle sx={{ mr: 2 }} />
+                                <ListItemButton href="/profile" onClick={() => setLeftOpen(false)}>
+                                    <AccountCircle sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Your Profile" />
                                 </ListItemButton>
                                 <ListItemButton href="/projects" onClick={() => setLeftOpen(false)}>
-                                    <AddchartIcon sx={{ mr: 2 }} />
+                                    <AddchartIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Your Projects" />
                                 </ListItemButton>
                                 <ListItemButton href="/connections" onClick={() => setLeftOpen(false)}>
-                                    <ConnectWithoutContactIcon sx={{ mr: 2 }} />
+                                    <ConnectWithoutContactIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Your Connections" />
                                 </ListItemButton>
                                 <Divider />
                                 <ListItemButton href="/settings" onClick={() => setLeftOpen(false)}>
-                                    <SettingsIcon sx={{ mr: 2 }} />
+                                    <SettingsIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Settings" />
                                 </ListItemButton>
                                 <Divider />
@@ -171,7 +170,7 @@ function NavBar() {
                                     setLeftOpen(false);
                                     signOut();
                                 }}>
-                                    <LogoutIcon sx={{ mr: 2 }} />
+                                    <LogoutIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Sign out" />
                                 </ListItemButton>
                             </>
