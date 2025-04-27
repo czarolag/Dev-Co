@@ -1,10 +1,13 @@
-import * as React from 'react';
+import { useState, useContext } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
@@ -13,8 +16,6 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import AppTheme from '../shared-theme/AppTheme';
-import ColorModeSelect from '../shared-theme/ColorModeSelect';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -58,65 +59,70 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function Login(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+export default function Login() {
+  const [identifierError, setIdentifierError] = useState(false);
+  const [identifierErrorMessage, setIdentifierErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const validateInputs = () => {
+        const identifier = document.getElementById("identifier");
+        const password = document.getElementById("password");
 
-  const handleSubmit = (event) => {
-    if (emailError || passwordError) {
+        let isValid = true;
+
+        // handle username input
+        if (!identifier.value || identifier.value.length < 4) {
+            setIdentifierError(true);
+            setIdentifierErrorMessage("Identifier must be at least 4 characters long.")
+            isValid = false;
+        } else {
+            setIdentifierError(false);
+            setIdentifierErrorMessage("");
+        }
+
+        // handle password input
+        if (!password.value || password.value.length < 6) {
+            setPasswordError(true);
+            setPasswordErrorMessage("Password must be at least 6 characters long.")
+            isValid = false;
+        } else {
+            setPasswordError(false);
+            setPasswordErrorMessage("");
+        }
+
+        return isValid;
+    };
+
+
+    const handleSubmit = async (event) => {
       event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
-  const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
+      if (!validateInputs()) return;
 
-    let isValid = true;
+      const data = {
+          identifier: document.getElementById("identifier").value,
+          password: document.getElementById("password").value,
+      };
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
-
-    return isValid;
+      // https://permify.co/post/jwt-authentication-in-react/
+      await axios.post("/api/users/login", data)
+          .then(res => {
+              toast.success("Successfully logged in.")
+              setUser(res.data.user);
+              navigate("/");
+          })
+          .catch(e => {
+              console.log(e)
+              toast.error(e.response.data.message);
+          });
   };
 
   return (
-    <AppTheme {...props}>
-      <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
-        <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <Card variant="outlined">
           <Typography
             component="h1"
@@ -137,20 +143,20 @@ export default function Login(props) {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="identifier">Email/Username</FormLabel>
               <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
+                error={identifierError}
+                helperText={identifierErrorMessage}
+                id="identifier"
+                type="identifier"
+                name="identifier"
+                placeholder="username or your@email.com"
                 autoComplete="email"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? 'error' : 'primary'}
+                color={identifierError ? 'error' : 'primary'}
               />
             </FormControl>
             <FormControl>
@@ -182,18 +188,8 @@ export default function Login(props) {
             >
               Sign in
             </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-            >
-              Forgot your password?
-            </Link>
           </Box>
         </Card>
       </SignInContainer>
-    </AppTheme>
   );
-}
+};
