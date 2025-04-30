@@ -5,7 +5,7 @@ import { UserContextProvider } from './context/userContext';
 import axios from "axios";
 import CssBaseline from "@mui/material/CssBaseline";
 import ColorModeSelect from './shared-theme/ColorModeSelect';
-
+import Login from "./pages/Login"
 import SignUp from "./pages/SignUp";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
@@ -30,6 +30,7 @@ function App(props) {
           <main>
             <Routes>
               <Route path='/signup' element={<SignUp />} />
+              <Route path='/Login' element={<Login />} />
               <Route path='/' element={<Home />} />
             </Routes>
           </main>
