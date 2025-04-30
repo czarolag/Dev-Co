@@ -130,7 +130,7 @@ function NavBar() {
 
                         {!user && (
                             <>
-                              <ListItemButton href="/signin" onClick={() => setLeftOpen(false)}>
+                              <ListItemButton href="/Login" onClick={() => setLeftOpen(false)}>
                                     <LoginIcon sx={{ mr: 2 }} />
                                     <ListItemText primary="Sign In" />
                                 </ListItemButton>
