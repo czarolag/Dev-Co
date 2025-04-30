@@ -1,9 +1,41 @@
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Projects from "../components/Projects"
+
+
 function Home() {
-    return (
-        <div style={{ padding: "200px" }}>
-            <h1 style={{ display: "block" }}>Temp Home Page</h1>
-        </div>
-    );
+  return (
+    <>
+        <Box sx= {{ marginBottom: 20, paddingTop: 8, paddingBottom: 6 }}>
+          <Typography
+            variant="h2"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            Dev-Co
+          </Typography>
+          <Typography
+            variant="h6"
+            align="center"
+            color="text.secondary"
+          >
+           Upload your projects for others to see or explore projects that other people have posted.
+          </Typography>
+        </Box>
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center','& > *': {m: 1,},}}>
+          <ButtonGroup size="large" aria-label="Upload/Explore" variant="contained">
+            <Button>Upload</Button>
+            <Button>Explore</Button>
+          </ButtonGroup>
+        </Box>
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center','& > *': {m: 1,},}}>
+          <Projects/>
+        </Box>
+    </>
+  );
 }
 
 export default Home;

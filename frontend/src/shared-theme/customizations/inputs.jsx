@@ -58,13 +58,13 @@ export const inputsCustomizations = {
             },
             style: {
               color: 'white',
-              backgroundColor: gray[900],
-              backgroundImage: `linear-gradient(to bottom, ${gray[700]}, ${gray[800]})`,
-              boxShadow: `inset 0 1px 0 ${gray[600]}, inset 0 -1px 0 1px hsl(220, 0%, 0%)`,
-              border: `1px solid ${gray[700]}`,
+              backgroundColor: brand[400],
+              backgroundImage: `linear-gradient(to bottom, ${brand[400]}, ${brand[500]})`,
+              boxShadow: `inset 0 1px 0 ${brand[200]}, inset 0 -1px 0 1px hsl(220, 0%, 0%)`,
+              border: `1px solid ${brand[800]}`,
               '&:hover': {
                 backgroundImage: 'none',
-                backgroundColor: gray[700],
+                backgroundColor: brand[900],
                 boxShadow: 'none',
               },
               '&:active': {

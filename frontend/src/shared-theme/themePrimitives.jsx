@@ -80,7 +80,7 @@ export const getDesignTokens = (mode) => {
       mode,
       primary: {
         light: brand[200],
-        main: brand[400],
+        main: brand[600],
         dark: brand[700],
         contrastText: brand[50],
         ...(mode === 'dark' && {
@@ -298,7 +298,7 @@ export const colorSchemes = {
       grey: {
         ...gray,
       },
-      divider: alpha(gray[700], 0.6),
+      divider: alpha(brand[700], 0.6),
       background: {
         default: gray[900],
         paper: 'hsl(220, 30%, 7%)',
