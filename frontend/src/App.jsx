@@ -9,8 +9,6 @@ import Login from "./pages/Login"
 import SignUp from "./pages/SignUp";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import ProfilePage from './pages/ProfilePage';
 import "./App.css";
 
 // set up axios
@@ -25,18 +23,19 @@ function App(props) {
       <ColorModeSelect sx={{ position: 'fixed', bottom: '1rem', right: '1rem' }} />
       <UserContextProvider>
         <Router>
+          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
           <header>
             <NavBar />
             <Toaster position='bottom-left' toastOptions={{ duration: 3000 }} />
           </header>
           <main>
-            <Routes>
-              <Route path='/profile' element={<ProfilePage />} />
+            <Routes> 
               <Route path='/signup' element={<SignUp />} />
               <Route path='/login' element={<Login />} />
               <Route path='/' element={<Home />} />
             </Routes>
           </main>
+          </div>
         </Router>
       </UserContextProvider>
     </AppTheme>

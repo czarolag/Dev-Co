@@ -5,7 +5,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 export default function TitlebarBelowImageList() {
   return (
-    <ImageList sx={{ width: 500, height: 450 }}>
+    <ImageList sx={{ width: 700, height: 1000 }}>
       {itemData.map((item) => (
         <ImageListItem key={item.img}>
           <img
@@ -67,7 +67,7 @@ const itemData = [
     author: '@coder8',
   },
   {
-    img: 'https://play-lh.googleusercontent.com/SveiQnduQmYtxvt2l0Gg2scLcoJbHpqZhYQXr15wzUgpHjvJFr0vJeDOr9enZLHlGrU=w526-h296-rw',
+    img: 'https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/alexandermatos/phpv8c15W.png',
     title: 'Chess',
     author: '@coder9',
   },
