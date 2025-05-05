@@ -25,6 +25,14 @@ const UserSchema = new mongoose.Schema(
             required: true,
             minlength: 6,
         },
+        bio: {
+            type: String,
+            default: '',
+        },
+        avatar: {
+            type: String,
+            default: ''
+        }
     },
     {
         collection: "userAuth",

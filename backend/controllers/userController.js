@@ -68,22 +68,9 @@ const login = async (req, res) => {
 
 // Get User Profile
 const getProfile = async (req, res) => {
-    const {token} = req.cookies;
-
-    if (!token) {
-        return res.status(401).json({ message: "Not Authenticated" });
-    }
-
-    // decoded JWT token
-    const decoded = User.verifyToken(token);
-
-    if (!decoded) {
-        return res.status(403).json({ message: "Invalid token" });
-    }
-
     try {
         // find user by
-        const user = await User.findById(decoded.userId).select("-password");
+        const user = await User.findById(req.user.userId).select("-password");
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });

@@ -1,9 +1,29 @@
-import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  Paper,
+  MobileStepper,
+  IconButton
+} from '@mui/material';
+import {
+  KeyboardArrowLeft,
+  KeyboardArrowRight
+} from '@mui/icons-material';
 
-export default function TitlebarBelowImageList() {
+
+export default function MUIManualCarousel() {
+  const [activeStep, setActiveStep] = useState(0);
+  const maxSteps = itemData.length;
+
+  const handleNext = () => {
+    setActiveStep((prevStep) => (prevStep + 1) % maxSteps);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevStep) => (prevStep - 1 + maxSteps) % maxSteps);
+  };
+
   return (
     <ImageList sx={{ width: 400, height: 300 }}>
       {itemData.map((item) => (

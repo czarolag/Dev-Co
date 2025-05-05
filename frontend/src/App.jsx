@@ -9,6 +9,7 @@ import Login from "./pages/Login"
 import SignUp from "./pages/SignUp";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
+import ProfilePage from './pages/ProfilePage';
 import Explore from './pages/Explore';
 import "./App.css";
 

@@ -165,7 +165,7 @@ export default function Login() {
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 name="password"
-                placeholder="••••••"
+                placeholder="******"
                 type="password"
                 id="password"
                 autoComplete="current-password"

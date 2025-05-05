@@ -148,7 +148,7 @@ function NavBar() {
                                     <ListItemText primary="Set Status" />
                                 </ListItemButton>
                                 <Divider />
-                                <ListItemButton href="/profile" onClick={() => setLeftOpen(false)}>
+                                <ListItemButton href="/profile/me" onClick={() => setLeftOpen(false)}>
                                     <AccountCircle sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Your Profile" />
                                 </ListItemButton>
