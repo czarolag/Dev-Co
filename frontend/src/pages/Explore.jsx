@@ -2,10 +2,16 @@ import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import ListSubheader from '@mui/material/ListSubheader';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
+import { Box } from '@mui/material'
 
-export default function TitlebarBelowImageList() {
+export default function Explore() {
   return (
-    <ImageList sx={{ width: 400, height: 300 }}>
+    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+      <ImageListItem key="Subheader" cols={2}></ImageListItem>
+      <ImageList sx={{ width: 800, height: 600 }} cols={3} rowHeight={200}>
       {itemData.map((item) => (
         <ImageListItem key={item.img}>
           <img
@@ -13,15 +19,24 @@ export default function TitlebarBelowImageList() {
             src={`${item.img}?w=248&fit=crop&auto=format`}
             alt={item.title}
             loading="lazy"
+            style={{ height: '200px', objectFit: 'cover' }}
           />
           <ImageListItemBar
             title={item.title}
-            subtitle={<span>by: {item.author}</span>}
-            position="below"
+            subtitle={item.author}
+            actionIcon={
+              <IconButton
+                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                aria-label={`info about ${item.title}`}
+              >
+                <InfoIcon />
+              </IconButton>
+            }
           />
         </ImageListItem>
       ))}
     </ImageList>
+    </Box>
   );
 }
 
@@ -76,5 +91,4 @@ const itemData = [
     title: 'Library management',
     author: '@coder10',
   },
-  
 ];

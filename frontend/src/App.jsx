@@ -9,6 +9,7 @@ import Login from "./pages/Login"
 import SignUp from "./pages/SignUp";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
+import Explore from './pages/Explore';
 import "./App.css";
 
 // set up axios
@@ -32,6 +33,7 @@ function App(props) {
             <Routes> 
               <Route path='/signup' element={<SignUp />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/Explore' element={<Explore />} />
               <Route path='/' element={<Home />} />
             </Routes>
           </main>

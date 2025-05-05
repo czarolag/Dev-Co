@@ -6,9 +6,10 @@ import Projects from "../components/Projects"
 
 
 function Home() {
+  
   return (
     <>
-        <Box sx= {{ marginBottom: 20, paddingTop: 8, paddingBottom: 6 }}>
+        <Box sx= {{ marginBottom: 10, paddingTop: 8, paddingBottom: 0 }}>
           <Typography
             variant="h2"
             align="center"
@@ -25,10 +26,10 @@ function Home() {
            Upload your projects for others to see or explore projects that other people have posted.
           </Typography>
         </Box>
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center','& > *': {m: 1,},}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center','& > *': {m: 10,},}}>
           <ButtonGroup size="large" aria-label="Upload/Explore" variant="contained">
             <Button>Upload</Button>
-            <Button>Explore</Button>
+            <Button href='/Explore'>Explore</Button>
           </ButtonGroup>
         </Box>
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center','& > *': {m: 1,},}}>
