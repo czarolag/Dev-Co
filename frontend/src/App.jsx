@@ -32,6 +32,7 @@ function App(props) {
           </header>
           <main>
             <Routes> 
+              <Route path='/profile/:username' element={<ProfilePage />} />
               <Route path='/signup' element={<SignUp />} />
               <Route path='/login' element={<Login />} />
               <Route path='/Explore' element={<Explore />} />
