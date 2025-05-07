@@ -52,16 +52,16 @@ export default function UploadForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (isSubmitting) return; // Prevent double-clicks
+    if (isSubmitting) return;
+  
     setIsSubmitting(true);
-
+  
     let finalImageUrl = form.img;
-
+  
     if (useFileUpload && file) {
       const formData = new FormData();
       formData.append('file', file);
-
+  
       try {
         const res = await axios.post('/api/projects/upload', formData, {
           withCredentials: true,
@@ -69,16 +69,23 @@ export default function UploadForm() {
         finalImageUrl = res.data.url;
       } catch (err) {
         console.error('Image upload failed:', err);
-        toast.error(err.response?.data?.message || 'Upload failed. Please try again.');
+        toast.error(err.response?.data?.message || 'Image upload failed.');
+        setIsSubmitting(false); // ✅ unlock form
         return;
       }
     }
-
+  
+    if (!finalImageUrl) {
+      toast.error("Please provide an image.");
+      setIsSubmitting(false);
+      return;
+    }
+  
     const tagsArray = form.tags
       .split(',')
       .map((tag) => tag.trim())
       .filter(Boolean);
-
+  
     try {
       await axios.post(
         '/api/projects',
@@ -86,22 +93,22 @@ export default function UploadForm() {
           ...form,
           img: finalImageUrl,
           tags: tagsArray,
-          author: user.username,
         },
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         }
       );
-
+  
       toast.success('Upload Successful!');
-      navigate('/explore')
+      navigate('/explore');
     } catch (err) {
       console.error('Upload failed:', err);
       toast.error(err.response?.data?.message || 'Upload failed. Please try again.');
+    } finally {
+      setIsSubmitting(false); 
     }
   };
-
   return (
     <Paper elevation={4} sx={{ maxWidth: 700, mx: 'auto', p: 4, borderRadius: 3 }}>
       <Typography variant="h5" gutterBottom>

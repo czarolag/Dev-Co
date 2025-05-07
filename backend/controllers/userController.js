@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Project = require("../models/Project")
 
 // Signup function
 const signup = async (req, res) => {
@@ -25,7 +26,7 @@ const signup = async (req, res) => {
             withCredentials: true,
             httpOnly: false,
         });
-        
+
         res.status(201).json({ message: "User logged in successfully", success: true, user });
     } catch (e) {
         console.error("Error in Signup", e);
@@ -84,6 +85,38 @@ const getProfile = async (req, res) => {
 };
 
 
+const getUserByUsername = async (req, res) => {
+    try {
+        const { username } = req.params;
+
+        const user = await User.findOne({ username }).select("_id username avatar bio");
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json(user);
+    } catch (err) {
+        console.error("Error fetching user by username:", err);
+        return res.status(500).json({ message: "Failed to load user profile" });
+    }
+};
+
+
+// GET /api/users/projects/:userId
+const getUserProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({
+            author: req.params.userId,
+          }).sort({ createdAt: -1 });
+        return res.status(200).json(projects);
+    } catch (err) {
+        console.error("Project fetch error:", err);
+        return res.status(500).json({ message: "Failed to fetch user projects" });
+    }
+};
+
+
 // User Sign out
 const signout = (req, res) => {
     res.clearCookie("token")
@@ -91,4 +124,4 @@ const signout = (req, res) => {
 }
 
 
-module.exports = { signup, login, getProfile, signout };
+module.exports = { signup, login, getProfile, signout, getUserByUsername, getUserProjects };

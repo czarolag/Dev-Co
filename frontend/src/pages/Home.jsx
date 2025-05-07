@@ -13,20 +13,22 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [index, setIndex] = useState(0);
 
+  const cardWidth = 400;
+  const cardGap = 16;
+  const visibleCount = 3;
+
   useEffect(() => {
-    axios.get('/api/projects', { withCredentials: true })
-      .then(res => setProjects(res.data))
-      .catch(err => console.error('Failed to fetch projects:', err))
+    axios
+      .get('/api/projects', { withCredentials: true })
+      .then((res) => setProjects(res.data))
+      .catch((err) => console.error('Failed to fetch projects:', err))
       .finally(() => setLoading(false));
   }, []);
 
-  const visibleCount = 3;
-  const cardWidth = 500;
-  const cardGap = 16;
   const maxIndex = Math.max(0, projects.length - visibleCount);
 
-  const handlePrev = () => setIndex(prev => Math.max(prev - 1, 0));
-  const handleNext = () => setIndex(prev => Math.min(prev + 1, maxIndex));
+  const handlePrev = () => setIndex((prev) => Math.max(prev - 1, 0));
+  const handleNext = () => setIndex((prev) => Math.min(prev + 1, maxIndex));
 
   return (
     <>
@@ -141,7 +143,7 @@ function Home() {
                         {item.title}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {item.author}
+                        {item.author?.username || 'Unknown'}
                       </Typography>
                     </Box>
                   </Paper>

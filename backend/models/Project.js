@@ -11,10 +11,6 @@ const projectSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    author: {
-      type: String,
-      required: true, 
-    },
     description: {
       type: String,
       required: true,
@@ -33,6 +29,10 @@ const projectSchema = new mongoose.Schema(
       enum: ['open', 'closed'],
       default: 'open',
     },
+    author: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User', 
+      required: true }
   },
   {
     timestamps: true, 

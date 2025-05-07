@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Projects from '../components/Projects';
-import { Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button, Typography } from '@mui/material';
 
 export default function Explore() {
   const [itemData, setItemData] = useState([]);
@@ -10,17 +10,22 @@ export default function Explore() {
   const projectsPerPage = 6;
 
   useEffect(() => {
-    axios.get('/api/projects', { withCredentials: true })
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = () => {
+    axios
+      .get('/api/projects', { withCredentials: true })
       .then((res) => setItemData(res.data))
       .catch((err) => console.error('Failed to fetch project data:', err));
-  }, []);
+  };
 
   const filtered = itemData.filter((project) => {
     const query = search.toLowerCase();
     return (
       project.title.toLowerCase().includes(query) ||
-      project.author.toLowerCase().includes(query) ||
-      project.tags?.some(tag => tag.toLowerCase().includes(query))
+      project.author?.username?.toLowerCase().includes(query) ||
+      project.tags?.some((tag) => tag.toLowerCase().includes(query))
     );
   });
 
@@ -36,7 +41,7 @@ export default function Explore() {
         value={search}
         onChange={(e) => {
           setSearch(e.target.value);
-          setPage(1); 
+          setPage(1);
         }}
         sx={{
           mb: 4,
@@ -45,11 +50,17 @@ export default function Explore() {
         }}
       />
 
-      <Projects projects={visibleProjects} />
+      {filtered.length === 0 ? (
+        <Typography variant="body2" align="center" mt={4}>
+          No projects found.
+        </Typography>
+      ) : (
+        <Projects projects={visibleProjects} />
+      )}
 
       {hasMore && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-          <Button variant="outlined" onClick={() => setPage(prev => prev + 1)}>
+          <Button variant="outlined" onClick={() => setPage((prev) => prev + 1)}>
             Load More
           </Button>
         </Box>
