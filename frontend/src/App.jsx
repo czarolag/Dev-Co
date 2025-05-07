@@ -2,6 +2,7 @@ import AppTheme from './shared-theme/AppTheme';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "react-hot-toast";
 import { UserContextProvider } from './context/userContext';
+import RequireAuth from './context/RequireAuth';
 import axios from "axios";
 import CssBaseline from "@mui/material/CssBaseline";
 import ColorModeSelect from './shared-theme/ColorModeSelect';
@@ -32,7 +33,7 @@ function App(props) {
           </header>
           <main>
             <Routes> 
-              <Route path='/profile/:username' element={<ProfilePage />} />
+              <Route path='/profile/:username' element={<RequireAuth><ProfilePage /></RequireAuth>} />
               <Route path='/signup' element={<SignUp />} />
               <Route path='/login' element={<Login />} />
               <Route path='/Explore' element={<Explore />} />

@@ -10,7 +10,17 @@ function Home() {
   
   return (
     <>
-        <Box sx= {{ marginBottom: 10, paddingTop: 8, paddingBottom: 0 }}>
+        <Paper elevation={3}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '30vh',
+          padding: 4,
+          marginTop: 8,
+          textAlign: 'center',
+        }}>
           <Typography
             variant="h2"
             align="center"
@@ -26,7 +36,7 @@ function Home() {
           >
            Upload your projects for others to see or explore projects that other people have posted.
           </Typography>
-        </Box>
+        </Paper>
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center','& > *': {m: 10,},}}>
           <ButtonGroup size="large" aria-label="Upload/Explore" variant="contained">
             <Button>Upload</Button>
