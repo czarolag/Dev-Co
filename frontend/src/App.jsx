@@ -14,6 +14,7 @@ import ProfilePage from './pages/ProfilePage';
 import Explore from './pages/Explore';
 import Contact from './pages/Contact';
 import UploadPage from './pages/UploadPage';
+import ProjectDetails from './pages/ProjectDetails';
 import "./App.css";
 
 
@@ -38,10 +39,11 @@ function App(props) {
             <Routes> 
               <Route path='/contact' element={<Contact />} />
               <Route path='/upload' element={<RequireAuth><UploadPage /></RequireAuth>} />
-              <Route path='/profile/:username' element={<RequireAuth><ProfilePage /></RequireAuth>} />
               <Route path='/signup' element={<SignUp />} />
               <Route path='/login' element={<Login />} />
               <Route path='/explore' element={<RequireAuth><Explore /></RequireAuth>} />
+              <Route path='/profile/:username' element={<RequireAuth><ProfilePage /></RequireAuth>} />
+              <Route path="/projects/:projectId" element={<RequireAuth><ProjectDetails /></RequireAuth>} />
               <Route path='/' element={<Home />} />
             </Routes>
           </main>

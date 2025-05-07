@@ -30,6 +30,8 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import CloseIcon from '@mui/icons-material/Close';
 import LoginIcon from '@mui/icons-material/Login';
 import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 
 
 function NavBar() {
@@ -147,9 +149,14 @@ function NavBar() {
                                     <AccountCircle sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Your Profile" />
                                 </ListItemButton>
-                                <ListItemButton href="/projects" onClick={() => setLeftOpen(false)}>
-                                    <AddchartIcon sx={{ marginRight: 2 }} />
-                                    <ListItemText primary="Your Projects" />
+                                <Divider />
+                                <ListItemButton href="/upload" onClick={() => setLeftOpen(false)}>
+                                    <CloudUploadIcon sx={{ marginRight: 2 }} />
+                                    <ListItemText primary="Upload" />
+                                </ListItemButton>
+                                <ListItemButton href="/explore" onClick={() => setLeftOpen(false)}>
+                                    <TravelExploreIcon sx={{ marginRight: 2 }} />
+                                    <ListItemText primary="Explore" />
                                 </ListItemButton>
                                 <Divider />
                                 <ListItemButton onClick={() => {

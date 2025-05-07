@@ -25,7 +25,7 @@ function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  const maxIndex = Math.max(0, projects.length - visibleCount);
+  const maxIndex = Math.max(0, 6 - visibleCount);
 
   const handlePrev = () => setIndex((prev) => Math.max(prev - 1, 0));
   const handleNext = () => setIndex((prev) => Math.min(prev + 1, maxIndex));
@@ -42,12 +42,30 @@ function Home() {
       </Box>
 
       <Box
+        elevation={3}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: 4,
+          maxWidth: 200,
+          mx: 'auto',
+        }}
+      >
+        <img
+          src="/devCo-loblolly-icon.svg"
+          alt="Loblolly Icon"
+          style={{ width: '100%', maxWidth: 450, height: 'auto' }}
+        />
+      </Box>
+
+      <Box
         sx={{
           display: 'flex',
           justifyContent: 'center',
           gap: 4,
           flexWrap: 'wrap',
-          mt: 8,
+          mt: 6,
         }}
       >
         <Button
@@ -113,7 +131,7 @@ function Home() {
                   transition: 'transform 0.5s ease',
                 }}
               >
-                {projects.map((item) => (
+                {projects.slice(0, 6).map((item) => (
                   <Paper
                     key={item._id}
                     elevation={4}

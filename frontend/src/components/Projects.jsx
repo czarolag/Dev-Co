@@ -49,7 +49,14 @@ export default function Projects({ projects }) {
               loading="lazy"
             />
             <Box sx={{ p: 2 }}>
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
+              <Typography
+                component={RouterLink}
+                to={`/projects/${project._id}`}
+                variant="h6"
+                fontWeight="bold"
+                gutterBottom
+                sx={{ textDecoration: 'none', color: 'primary.main' }}
+              >
                 {project.title}
               </Typography>
 

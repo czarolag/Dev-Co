@@ -29,13 +29,24 @@ const projectSchema = new mongoose.Schema(
       enum: ['open', 'closed'],
       default: 'open',
     },
-    author: { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'User', 
-      required: true }
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    collaborators: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: [],
+    }],
+    pendingRequests: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: [],
+    }],
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
