@@ -1,18 +1,22 @@
-import { useContext } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
+import { toast } from "react-hot-toast";
 
 const RequireAuth = ({ children }) => {
   const { user, loading } = useContext(UserContext);
-  const location = useLocation();
+  const navigate = useNavigate();
 
-  if (loading) return null; // or render a spinner
+  useEffect(() => {
+    if (!loading && !user) {
+      toast.error("Must be signed in to use this feature.");
+      navigate("/login");
+    }
+  }, [user, loading, navigate]);
 
-  if (!user) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
+  if (loading) return null;
 
-  return children;
+  return user ? children : null;
 };
 
 export default RequireAuth;

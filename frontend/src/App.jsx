@@ -41,7 +41,7 @@ function App(props) {
               <Route path='/profile/:username' element={<RequireAuth><ProfilePage /></RequireAuth>} />
               <Route path='/signup' element={<SignUp />} />
               <Route path='/login' element={<Login />} />
-              <Route path='/Explore' element={<Explore />} />
+              <Route path='/explore' element={<RequireAuth><Explore /></RequireAuth>} />
               <Route path='/' element={<Home />} />
             </Routes>
           </main>

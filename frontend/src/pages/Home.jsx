@@ -3,12 +3,10 @@ import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import UploadForm from "../components/UploadForm";
 
 function Home() {
   const [projects, setProjects] = useState([]);
@@ -32,37 +30,79 @@ function Home() {
 
   return (
     <>
-      <Box sx={{ marginY: 10, paddingX: 8 }}>
-        <Typography variant="h2" align="center" color="text.primary" gutterBottom>
+      <Box sx={{ mt: 10, px: 4, textAlign: 'center' }}>
+        <Typography variant="h2" fontWeight="bold" gutterBottom>
           Dev-Co
         </Typography>
-        <Typography variant="h6" align="center" color="text.secondary">
-          Upload your projects for others to see or explore projects that other people have posted.
+        <Typography variant="h6" color="text.secondary" maxWidth={700} mx="auto">
+          Share your creations with the world or explore what others are building.
         </Typography>
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': { m: 10 } }}>
-        <ButtonGroup size="large" aria-label="Upload/Explore" variant="contained">
-          <Button href='/upload'>Upload</Button>
-          <Button href='/explore'>Explore</Button>
-        </ButtonGroup>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 4,
+          flexWrap: 'wrap',
+          mt: 8,
+        }}
+      >
+        <Button
+          href="/upload"
+          variant="contained"
+          color="primary"
+          size="large"
+          sx={{
+            px: 6,
+            py: 2,
+            borderRadius: 3,
+            fontSize: '1.1rem',
+            fontWeight: 600,
+            boxShadow: 3,
+          }}
+        >
+          Upload Project
+        </Button>
+
+        <Button
+          href="/explore"
+          variant="outlined"
+          size="large"
+          sx={{
+            px: 6,
+            py: 2,
+            borderRadius: 3,
+            fontSize: '1.1rem',
+            fontWeight: 600,
+            boxShadow: 1,
+            borderWidth: 2,
+          }}
+        >
+          Explore Projects
+        </Button>
       </Box>
-      <Box sx={{ mt: 5, mb: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+
+      <Box
+        sx={{
+          mt: 10,
+          mb: 12,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 2,
+          px: 2,
+        }}
+      >
         {loading ? (
-          <Typography align="center">Loading projects...</Typography>
+          <Typography>Loading projects...</Typography>
         ) : (
           <>
             <IconButton onClick={handlePrev} disabled={index === 0}>
               <ChevronLeftIcon />
             </IconButton>
 
-            <Box
-              sx={{
-                overflow: 'hidden',
-                width: '100%',
-                maxWidth: 1200,
-              }}
-            >
+            <Box sx={{ overflow: 'hidden', width: '100%', maxWidth: 1200 }}>
               <Box
                 sx={{
                   display: 'flex',
@@ -80,17 +120,21 @@ function Home() {
                       flexShrink: 0,
                       borderRadius: 3,
                       overflow: 'hidden',
-                      bgcolor: 'background.paper',
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between',
-                      minHeight: 320,
+                      bgcolor: 'background.paper',
                     }}
                   >
                     <img
                       src={item.img}
                       alt={item.title}
-                      style={{ width: '100%', height: 200, objectFit: 'cover' }}
+                      style={{
+                        width: '100%',
+                        height: 200,
+                        objectFit: 'cover',
+                      }}
+                      loading="lazy"
                     />
                     <Box sx={{ p: 2, pb: 3 }}>
                       <Typography variant="h6" fontWeight="bold">

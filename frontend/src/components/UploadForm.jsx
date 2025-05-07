@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -10,7 +12,7 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/userContext';
 
 export default function UploadForm() {
   const { user } = useContext(UserContext);
@@ -27,6 +29,8 @@ export default function UploadForm() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState('');
   const [useFileUpload, setUseFileUpload] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -36,18 +40,21 @@ export default function UploadForm() {
     const uploadedFile = e.target.files[0];
     if (!uploadedFile) return;
 
-    if (!uploadedFile.type.startsWith("image/")) {
-      alert("Please upload a valid image file.");
+    if (!uploadedFile.type.startsWith('image/')) {
+      toast.error(err.response?.data?.message || 'Upload failed. Please try again.');
       return;
     }
 
     setFile(uploadedFile);
     setPreview(URL.createObjectURL(uploadedFile));
-    setForm((prev) => ({ ...prev, img: '' })); // Clear URL
+    setForm((prev) => ({ ...prev, img: '' }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (isSubmitting) return; // Prevent double-clicks
+    setIsSubmitting(true);
 
     let finalImageUrl = form.img;
 
@@ -56,13 +63,13 @@ export default function UploadForm() {
       formData.append('file', file);
 
       try {
-        const res = await axios.post('/api/upload', formData, {
+        const res = await axios.post('/api/projects/upload', formData, {
           withCredentials: true,
         });
         finalImageUrl = res.data.url;
       } catch (err) {
         console.error('Image upload failed:', err);
-        alert('Image upload failed');
+        toast.error(err.response?.data?.message || 'Upload failed. Please try again.');
         return;
       }
     }
@@ -87,21 +94,11 @@ export default function UploadForm() {
         }
       );
 
-      alert('Project uploaded!');
-      setForm({
-        title: '',
-        img: '',
-        description: '',
-        tags: '',
-        url: '',
-        collaboration: 'open',
-      });
-      setFile(null);
-      setPreview('');
-      setUseFileUpload(false);
+      toast.success('Upload Successful!');
+      navigate('/explore')
     } catch (err) {
       console.error('Upload failed:', err);
-      alert('Upload failed');
+      toast.error(err.response?.data?.message || 'Upload failed. Please try again.');
     }
   };
 
@@ -111,7 +108,12 @@ export default function UploadForm() {
         Submit a New Project
       </Typography>
 
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        noValidate
+        sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
+      >
         <TextField
           label="Title"
           name="title"
@@ -134,7 +136,7 @@ export default function UploadForm() {
               color="primary"
             />
           }
-          label={useFileUpload ? "Use File Upload" : "Use Image URL"}
+          label={useFileUpload ? 'Use File Upload' : 'Use Image URL'}
         />
 
         {!useFileUpload ? (
@@ -147,7 +149,6 @@ export default function UploadForm() {
               setFile(null);
               handleChange(e);
 
-              // Basic image extension check
               const isValidImageURL = /\.(jpeg|jpg|gif|png|webp|svg)$/i.test(value);
               setPreview(isValidImageURL ? value : '');
             }}
@@ -173,8 +174,13 @@ export default function UploadForm() {
             <img
               src={preview}
               alt="Preview"
-              style={{ maxHeight: 200, maxWidth: '100%', marginTop: 10, borderRadius: 8 }}
-              onError={(e) => e.target.style.display = 'none'}
+              style={{
+                maxHeight: 200,
+                maxWidth: '100%',
+                marginTop: 10,
+                borderRadius: 8,
+              }}
+              onError={(e) => (e.target.style.display = 'none')}
             />
           </Box>
         )}

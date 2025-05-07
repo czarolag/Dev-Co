@@ -143,11 +143,6 @@ function NavBar() {
 
                         {user && (
                             <>
-                                <ListItemButton href="/status" onClick={() => setLeftOpen(false)}>
-                                    <TagFacesIcon sx={{ marginRight: 2 }} />
-                                    <ListItemText primary="Set Status" />
-                                </ListItemButton>
-                                <Divider />
                                 <ListItemButton href="/profile/me" onClick={() => setLeftOpen(false)}>
                                     <AccountCircle sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Your Profile" />
@@ -155,15 +150,6 @@ function NavBar() {
                                 <ListItemButton href="/projects" onClick={() => setLeftOpen(false)}>
                                     <AddchartIcon sx={{ marginRight: 2 }} />
                                     <ListItemText primary="Your Projects" />
-                                </ListItemButton>
-                                <ListItemButton href="/connections" onClick={() => setLeftOpen(false)}>
-                                    <ConnectWithoutContactIcon sx={{ marginRight: 2 }} />
-                                    <ListItemText primary="Your Connections" />
-                                </ListItemButton>
-                                <Divider />
-                                <ListItemButton href="/settings" onClick={() => setLeftOpen(false)}>
-                                    <SettingsIcon sx={{ marginRight: 2 }} />
-                                    <ListItemText primary="Settings" />
                                 </ListItemButton>
                                 <Divider />
                                 <ListItemButton onClick={() => {

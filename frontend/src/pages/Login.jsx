@@ -188,6 +188,16 @@ export default function Login() {
             >
               Sign in
             </Button>
+            <Typography sx={{ textAlign: 'center' }}>
+                        Don't Have an account?{' '}
+                        <Link
+                            href="/signup"
+                            variant="body2"
+                            sx={{ alignSelf: 'center' }}
+                        >
+                            Sign Up
+                        </Link>
+                    </Typography>
           </Box>
         </Card>
       </SignInContainer>

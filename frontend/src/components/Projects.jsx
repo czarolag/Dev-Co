@@ -82,15 +82,6 @@ export default function Projects({ projects }) {
                 </Typography>
               )}
 
-              {selectedProject.url && (
-                <Typography gutterBottom>
-                  <strong>Project URL:</strong>{' '}
-                  <a href={selectedProject.url} target="_blank" rel="noreferrer">
-                    {selectedProject.url}
-                  </a>
-                </Typography>
-              )}
-
               {selectedProject.tags?.length > 0 && (
                 <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                   {selectedProject.tags.map((tag, i) => (
@@ -99,7 +90,7 @@ export default function Projects({ projects }) {
                 </Box>
               )}
 
-              <Typography sx={{ mt: 2 }} variant="caption">
+              <Typography sx={{ marginTop: 2 }} variant="caption">
                 Collaboration: {selectedProject.collaboration}
               </Typography>
             </DialogContent>
