@@ -13,7 +13,7 @@ export default function Explore() {
   }, []);
 
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box sx={{ marginTop: 10, paddingX: 2 }}>
       <Projects projects={itemData} />
     </Box>
   );

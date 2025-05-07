@@ -80,4 +80,28 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { updateProfile };
+
+
+const uploadProjectImage = async (req, res) => {
+  try {
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const base64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+
+    const result = await cloudinary.uploader.upload(base64, {
+      folder: "projects",
+      public_id: `project_${Date.now()}`,
+      transformation: [{ width: 800, crop: "limit", quality: "auto" }],
+    });
+
+    return res.status(200).json({ url: result.secure_url });
+  } catch (err) {
+    console.error("Cloudinary upload error:", err);
+    return res.status(500).json({ message: "Upload failed" });
+  }
+};
+
+
+module.exports = { updateProfile, uploadProjectImage };

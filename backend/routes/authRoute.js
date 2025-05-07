@@ -1,6 +1,6 @@
 const express = require("express");
 const { signup, login, getProfile, signout } = require("../controllers/userController");
-const { updateProfile } = require("../controllers/uploadController");
+const { updateProfile, uploadProjectImage } = require("../controllers/uploadController");
 const auth = require("../middleware/auth");
 const upload = require("../middleware/multer");
 const router = express.Router();
@@ -14,6 +14,7 @@ router.post("/signout", signout)
 
 // update profile
 router.put("/profile", auth, upload.single("avatar"), updateProfile);
+router.post("/", upload.single("file"), uploadProjectImage);
 
 
 module.exports = router;

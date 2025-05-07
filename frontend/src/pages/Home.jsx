@@ -11,10 +11,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import UploadForm from "../components/UploadForm";
 
 function Home() {
-  const [showUploadForm, setShowUploadForm] = useState(false);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [index, setIndex] = useState(0); // current slide index
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     axios.get('/api/projects', { withCredentials: true })
@@ -23,11 +22,13 @@ function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  const visibleCount = 3; // number of projects to show at once
+  const visibleCount = 3;
+  const cardWidth = 500;
+  const cardGap = 16;
   const maxIndex = Math.max(0, projects.length - visibleCount);
 
-  const handlePrev = () => setIndex((prev) => Math.max(prev - 1, 0));
-  const handleNext = () => setIndex((prev) => Math.min(prev + 1, maxIndex));
+  const handlePrev = () => setIndex(prev => Math.max(prev - 1, 0));
+  const handleNext = () => setIndex(prev => Math.min(prev + 1, maxIndex));
 
   return (
     <>
@@ -42,20 +43,11 @@ function Home() {
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': { m: 10 } }}>
         <ButtonGroup size="large" aria-label="Upload/Explore" variant="contained">
-          <Button onClick={() => setShowUploadForm(!showUploadForm)}>
-            {showUploadForm ? 'Close Upload' : 'Upload'}
-          </Button>
-          <Button href='/Explore'>Explore</Button>
+          <Button href='/upload'>Upload</Button>
+          <Button href='/explore'>Explore</Button>
         </ButtonGroup>
       </Box>
-
-      {showUploadForm && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-          <UploadForm />
-        </Box>
-      )}
-
-      <Box sx={{ mt: 5, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+      <Box sx={{ mt: 5, mb: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
         {loading ? (
           <Typography align="center">Loading projects...</Typography>
         ) : (
@@ -74,10 +66,9 @@ function Home() {
               <Box
                 sx={{
                   display: 'flex',
-                  gap: 2,
-                  transform: `translateX(-${index * (100 / visibleCount)}%)`,
+                  gap: `${cardGap}px`,
+                  transform: `translateX(-${index * (cardWidth + cardGap)}px)`,
                   transition: 'transform 0.5s ease',
-                  width: `${(projects.length / visibleCount) * 100}%`
                 }}
               >
                 {projects.map((item) => (
@@ -85,10 +76,15 @@ function Home() {
                     key={item._id}
                     elevation={4}
                     sx={{
-                      minWidth: `${100 / visibleCount}%`,
+                      width: cardWidth,
+                      flexShrink: 0,
                       borderRadius: 3,
                       overflow: 'hidden',
                       bgcolor: 'background.paper',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      minHeight: 320,
                     }}
                   >
                     <img
@@ -96,9 +92,13 @@ function Home() {
                       alt={item.title}
                       style={{ width: '100%', height: 200, objectFit: 'cover' }}
                     />
-                    <Box sx={{ p: 2 }}>
-                      <Typography variant="h6">{item.title}</Typography>
-                      <Typography variant="body2" color="text.secondary">{item.author}</Typography>
+                    <Box sx={{ p: 2, pb: 3 }}>
+                      <Typography variant="h6" fontWeight="bold">
+                        {item.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {item.author}
+                      </Typography>
                     </Box>
                   </Paper>
                 ))}
